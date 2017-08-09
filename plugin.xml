@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="cordova-plugin-ionic-discover"
+    version="0.0.1">
+
+    <name>IonicDiscover</name>
+    <description>IonicDiscover plugin for Cordova/Phonegap</description>
+    <author>Manu Mtz.-Almeida</author>
+    <keywords>cordova,plugin,network,zeroconf,bonjour,mdns,service,discovery,ionic</keywords>
+    <license>MIT</license>
+
+    <engines>
+        <engine name="cordova" version=">=3.0.0" />
+    </engines>
+
+    <platform name="ios">
+        <js-module src="www/ionic-discover.js" name="IonicDiscover">
+            <clobbers target="cordova.plugins.ionic-discover" />
+        </js-module>
+        <config-file target="config.xml" parent="/*">
+            <feature name="IonicDiscover">
+                <param name="ios-package" value="CDVIonicDiscover"/>
+            </feature>
+        </config-file>
+        <header-file src="src/ios/IonicDiscover-Bridging-Header.h"/>
+        <source-file src="src/ios/IonicDiscover.swift"/>
+        <source-file src="src/ios/CDVIonicDiscover.swift"/>
+        <header-file src="src/ios/GCDAsyncUdpSocket.h"/>
+        <source-file src="src/ios/GCDAsyncUdpSocket.m"/>
+    </platform>
+
+    <dependency id="cordova-plugin-add-swift-support"/>
+
+</plugin>

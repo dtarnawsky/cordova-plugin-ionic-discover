@@ -1,0 +1,37 @@
+{
+    "name": "cordova-plugin-ionic-discover",
+    "version": "0.0.1",
+    "description": "Cordova Ionic Discover plugin",
+    "cordova": {
+        "id": "cordova-plugin-ionic-discover",
+        "platforms": [
+            "ios"
+        ]
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ionic-team/cordova-plugin-ionic-discover.git"
+    },
+    "keywords": [
+        "ecosystem:cordova",
+        "cordova-android",
+        "cordova-ios",
+        "cordova",
+        "plugin",
+        "network",
+        "zeroconf",
+        "bonjour",
+        "mdns",
+        "service",
+        "discovery"
+    ],
+    "author": {
+        "name": "Manu Mtz.-Almeida",
+        "url": "https://github.com/manucorporat"
+    },
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/ionic-team/cordova-plugin-ionic-discover/issues"
+    },
+    "homepage": "https://github.com/ionic-team/cordova-plugin-ionic-discover"
+}
