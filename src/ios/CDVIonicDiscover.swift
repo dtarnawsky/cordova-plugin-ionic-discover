@@ -11,10 +11,8 @@ import Foundation
     }
 
     public func watch(_ command: CDVInvokedUrlCommand) {
-        print("WATCH START!!")
         self.callbackID = command.callbackId
         self.service?.start { (service) in
-            print("WATCH RESULT!!")
             let message = self.generateMessage(service.getServices())
             let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: message)
             pluginResult?.setKeepCallbackAs(true)
@@ -24,10 +22,10 @@ import Foundation
     }
 
     private func generateMessage(_ services: [Service]) -> [String: Any] {
-        let s = services.map { (s) -> [String: Any] in
+        let arrayOfServices = services.map { (s) -> [String: Any] in
             return s.toDictionary()
         }
-        return ["services": s]
+        return ["services": arrayOfServices]
     }
 
     public func unwatch(_ command: CDVInvokedUrlCommand) {
