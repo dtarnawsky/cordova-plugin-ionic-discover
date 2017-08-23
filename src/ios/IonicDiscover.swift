@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Service : Hashable {
+public struct Service {
 
     var id: String
     var lastTimeStamp: TimeInterval
@@ -8,11 +8,6 @@ public struct Service : Hashable {
     var hostname: String
     var address: String
     var port: Int
-
-    public var hashValue: Int { get {
-        return self.id.hashValue ^ self.name.hashValue ^  self.hostname.hashValue ^ self.port.hashValue
-        }
-    }
 
     public static func ==(lhs: Service, rhs: Service) -> Bool {
         return lhs.id == rhs.id && lhs.lastTimeStamp == rhs.lastTimeStamp;
@@ -40,7 +35,6 @@ public class IonicDiscover : NSObject, GCDAsyncUdpSocketDelegate {
     var servicesEmitted = [String: Service]()
     var timer: Timer?
     var didChange: ((IonicDiscover) -> Void)?
-    var lastHash: Int = 0
 
     init(namespace: String) {
         self.namespace = namespace
@@ -90,14 +84,7 @@ public class IonicDiscover : NSObject, GCDAsyncUdpSocketDelegate {
     }
 
     private func emit() {
-        var hash: Int = 0
-        for (_, service) in self.services {
-            hash ^= service.hashValue
-        }
-        if hash != self.lastHash {
-            self.didChange?(self)
-            self.lastHash = hash
-        }
+        self.didChange?(self)
     }
 
     public func udpSocket(_ sock: GCDAsyncUdpSocket, didReceive data: Data, fromAddress address: Data, withFilterContext filterContext: Any?) {
@@ -130,5 +117,4 @@ public class IonicDiscover : NSObject, GCDAsyncUdpSocketDelegate {
         self.socket = nil
         self.timer = nil
     }
-
 }
