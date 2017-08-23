@@ -107,7 +107,7 @@ public class IonicDiscover : NSObject, GCDAsyncUdpSocketDelegate {
 
         let now = Date().timeIntervalSince1970
         self.services[id] = Service(id: id, lastTimeStamp: now, name: name, hostname: hostname, address: address, port: port);
-        self.emit()
+        self.gc();
     }
 
     public func close() {
