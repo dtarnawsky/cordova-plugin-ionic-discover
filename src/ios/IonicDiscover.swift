@@ -32,9 +32,8 @@ public class IonicDiscover : NSObject, GCDAsyncUdpSocketDelegate {
     var namespace: String
     var socket: GCDAsyncUdpSocket?
     var services = [String: Service]()
-    var servicesEmitted = [String: Service]()
     var timer: Timer?
-    var didChange: ((IonicDiscover) -> Void)?
+    var didChange: (() -> Void)?
 
     init(namespace: String) {
         self.namespace = namespace
@@ -44,7 +43,7 @@ public class IonicDiscover : NSObject, GCDAsyncUdpSocketDelegate {
         return self.socket != nil
     }
 
-    public func start(didChange: @escaping ((IonicDiscover)->Void)) {
+    public func start(didChange: @escaping (()->Void)) {
         if self.isRunning() {
             return
         }
@@ -84,7 +83,7 @@ public class IonicDiscover : NSObject, GCDAsyncUdpSocketDelegate {
     }
 
     private func emit() {
-        self.didChange?(self)
+        self.didChange?()
     }
 
     public func udpSocket(_ sock: GCDAsyncUdpSocket, didReceive data: Data, fromAddress address: Data, withFilterContext filterContext: Any?) {
@@ -98,6 +97,8 @@ public class IonicDiscover : NSObject, GCDAsyncUdpSocketDelegate {
         guard
             let json = try? JSONSerialization.jsonObject(with: content, options: []),
             let dictionary = json as? [String:Any],
+            let namespace = dictionary["nspace"] as? String,
+            namespace == self.namespace,
             let id = dictionary["id"] as? String,
             let name = dictionary["name"] as? String,
             let hostname = dictionary["host"] as? String,
@@ -111,10 +112,14 @@ public class IonicDiscover : NSObject, GCDAsyncUdpSocketDelegate {
     }
 
     public func close() {
-        self.socket?.close()
-        self.timer?.invalidate()
-        self.didChange = nil
-        self.socket = nil
-        self.timer = nil
+        if !self.isRunning() {
+            return
+        }
+        socket!.close()
+        timer!.invalidate()
+        services.removeAll()
+        didChange = nil
+        socket = nil
+        timer = nil
     }
 }
