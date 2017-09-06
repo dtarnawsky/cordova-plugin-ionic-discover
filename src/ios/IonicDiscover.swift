@@ -2,12 +2,13 @@ import Foundation
 
 public struct Service {
 
-    var id: String
-    var lastTimeStamp: TimeInterval
-    var name: String
-    var hostname: String
-    var address: String
-    var port: Int
+    let id: String
+    let lastTimeStamp: TimeInterval
+    let name: String
+    let hostname: String
+    let address: String
+    let port: Int
+    let path: String
 
     public static func ==(lhs: Service, rhs: Service) -> Bool {
         return lhs.id == rhs.id && lhs.lastTimeStamp == rhs.lastTimeStamp;
@@ -15,11 +16,12 @@ public struct Service {
 
     public func toDictionary() -> [String: Any] {
         return [
-            "id": self.id,
-            "name": self.name,
-            "hostname": self.hostname,
-            "address": self.address,
-            "port": self.port
+            "id": id,
+            "name": name,
+            "hostname": hostname,
+            "address": address,
+            "port": port,
+            "path": path
         ]
     }
 }
@@ -96,18 +98,27 @@ public class IonicDiscover : NSObject, GCDAsyncUdpSocketDelegate {
 
         guard
             let json = try? JSONSerialization.jsonObject(with: content, options: []),
-            let dictionary = json as? [String:Any],
-            let namespace = dictionary["nspace"] as? String,
+            let dict = json as? [String:Any],
+            let namespace = dict["nspace"] as? String,
             namespace == self.namespace,
-            let id = dictionary["id"] as? String,
-            let name = dictionary["name"] as? String,
-            let hostname = dictionary["host"] as? String,
-            let address = dictionary["ip"] as? String,
-            let port = dictionary["port"] as? Int
+            let id = dict["id"] as? String,
+            let name = dict["name"] as? String,
+            let hostname = dict["host"] as? String,
+            let address = dict["ip"] as? String,
+            let port = dict["port"] as? Int,
+            let path = dict["path"] as? String
             else { return }
 
         let now = Date().timeIntervalSince1970
-        self.services[id] = Service(id: id, lastTimeStamp: now, name: name, hostname: hostname, address: address, port: port);
+        self.services[id] = Service(
+            id: id,
+            lastTimeStamp: now,
+            name: name,
+            hostname: hostname,
+            address: address,
+            port: port,
+            path: path
+        );
         self.gc();
     }
 
