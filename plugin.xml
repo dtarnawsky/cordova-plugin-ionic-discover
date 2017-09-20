@@ -30,6 +30,18 @@
         <source-file src="src/ios/GCDAsyncUdpSocket.m"/>
     </platform>
 
-    <dependency id="cordova-plugin-add-swift-support"/>
+    <platform name="android">
+        <js-module src="www/ionic-discover.js" name="IonicDiscover">
+            <clobbers target="window.IonicDiscover" />
+        </js-module>
+        <config-file target="config.xml" parent="/*">
+            <feature name="IonicDiscover">
+                <param name="android-package" value="com.ionicframework.discover.IonicDiscover" />
+            </feature>
+        </config-file>
 
+        <source-file src="src/android/IonicDiscover.java" target-dir="src/com/ionicframework/discover" />
+    </platform>
+
+    <dependency id="cordova-plugin-add-swift-support"/>
 </plugin>
