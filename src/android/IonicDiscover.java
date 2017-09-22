@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 
 public class IonicDiscover extends CordovaPlugin {
@@ -30,6 +32,7 @@ public class IonicDiscover extends CordovaPlugin {
   private volatile HashMap<String, Service> services = new HashMap<>();
   private CountDownLatch latch = null;
   private volatile boolean running = false;
+  private ScheduledThreadPoolExecutor timer = null;
 
   /**
    * Sets the context of the Command. This can then be used to do things like
@@ -87,6 +90,10 @@ public class IonicDiscover extends CordovaPlugin {
     latch = new CountDownLatch(1);
     running = true;
 
+    // start timer to do GC
+    timer = new ScheduledThreadPoolExecutor(1);
+    timer.scheduleWithFixedDelay(() -> gc(), 0L, 1L, TimeUnit.SECONDS);
+
     new AsyncTask<Void, Void, JSONObject>() {
       @Override
       final protected JSONObject doInBackground(Void...params) {
@@ -130,14 +137,9 @@ public class IonicDiscover extends CordovaPlugin {
         return null;
       }
 
-      @Override
-      protected void onPostExecute(JSONObject dict) {
-      }
-
     }.execute();
   }
 
-  // TODO add GC and run on timer
   private synchronized void addService(JSONObject dict) {
     try {
       if (!"devapp".equals(dict.getString("nspace"))) return;
@@ -159,7 +161,11 @@ public class IonicDiscover extends CordovaPlugin {
       e.printStackTrace();
       return;
     }
+    this.gc();
+  }
 
+  private synchronized void gc() {
+//    Log.d(LOGTAG, "GC");
     long expired = (System.currentTimeMillis() / 1000) - 8;
     Iterator it = this.services.entrySet().iterator();
     while (it.hasNext()) {
@@ -185,6 +191,7 @@ public class IonicDiscover extends CordovaPlugin {
     }
     services = new HashMap<>();
     latch = null;
+    timer.shutdownNow();
 
     return;
   }
