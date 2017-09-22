@@ -178,20 +178,21 @@ public class IonicDiscover extends CordovaPlugin {
     this.emit();
   }
 
-  // TODO don't block main thread
   private void close() {
 //    Log.d(LOGTAG, "CLOSE");
     if (latch == null) return;
     running = false;
-    Log.d(LOGTAG, "Waiting for latch");
-    try {
-      latch.await();
-    } catch(InterruptedException e) {
-      e.printStackTrace();
-    }
-    services = new HashMap<>();
-    latch = null;
     timer.shutdownNow();
+    this.cordova.getThreadPool().execute(() -> {
+//      Log.d(LOGTAG, "Waiting for latch");
+      try {
+        latch.await();
+      } catch(InterruptedException e) {
+        e.printStackTrace();
+      }
+      services = new HashMap<>();
+      latch = null;
+    });
 
     return;
   }
