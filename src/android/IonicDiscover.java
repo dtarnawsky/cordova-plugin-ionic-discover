@@ -105,6 +105,7 @@ public class IonicDiscover extends CordovaPlugin {
           DatagramPacket packet = new DatagramPacket(buf, buf.length);
           while (running) {
             socket.receive(packet);
+            if (!running) continue;
 //            Log.d(LOGTAG, "packet received");
             String prefix = new String(buf, 0, PREFIX.length());
             if (!prefix.equals(PREFIX)) continue;
@@ -162,6 +163,11 @@ public class IonicDiscover extends CordovaPlugin {
       return;
     }
     this.gc();
+  }
+
+  @Override
+  public void onPause(boolean multitasking) {
+      close();
   }
 
   private synchronized void gc() {
