@@ -12,7 +12,7 @@ import Foundation
 
     public func start(_ command: CDVInvokedUrlCommand?) {
         // unwatch previous connections
-        unwatch(nil)
+        stop(nil)
 
         service.start { }
     }
@@ -25,12 +25,10 @@ import Foundation
     }
 
     public func getServices(_ command: CDVInvokedUrlCommand?) {
-        service.close()
-
         if let c = command {
             let message = generateMessage(service.getServices())
             let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: message)
-            commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: c.callbackId)
+            commandDelegate?.send(pluginResult, callbackId: c.callbackId)
         }
     }
 
