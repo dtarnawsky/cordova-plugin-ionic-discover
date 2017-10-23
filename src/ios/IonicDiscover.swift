@@ -34,7 +34,6 @@ public class IonicDiscover : NSObject, GCDAsyncUdpSocketDelegate {
     var namespace: String
     var socket: GCDAsyncUdpSocket?
     var services = [String: Service]()
-    var timer: Timer?
     var didChange: (() -> Void)?
 
     init(namespace: String) {
@@ -62,7 +61,6 @@ public class IonicDiscover : NSObject, GCDAsyncUdpSocketDelegate {
             try socket.beginReceiving()
             self.socket = socket
             self.didChange = didChange
-            self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector:#selector(IonicDiscover.gc), userInfo: nil, repeats: true);
 
         } catch _ as NSError {
             print("Issue with setting up listener")
@@ -71,6 +69,7 @@ public class IonicDiscover : NSObject, GCDAsyncUdpSocketDelegate {
     }
 
     public func getServices() -> [Service] {
+        self.gc();
         return Array(self.services.values)
     }
 
@@ -127,10 +126,8 @@ public class IonicDiscover : NSObject, GCDAsyncUdpSocketDelegate {
             return
         }
         socket!.close()
-        timer!.invalidate()
         services.removeAll()
         didChange = nil
         socket = nil
-        timer = nil
     }
 }

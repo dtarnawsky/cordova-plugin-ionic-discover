@@ -28,11 +28,10 @@ public class IonicDiscover extends CordovaPlugin {
   private static int PORT = 41234;
   private static String PREFIX = "ION_DP";
   private static String LOGTAG = "IonicDiscover";
-  private CallbackContext callbackContext = null;
   private volatile HashMap<String, Service> services = new HashMap<>();
   private CountDownLatch latch = null;
   private volatile boolean running = false;
-  private ScheduledThreadPoolExecutor timer = null;
+
 
   /**
    * Sets the context of the Command. This can then be used to do things like
@@ -54,13 +53,16 @@ public class IonicDiscover extends CordovaPlugin {
    * @return                  True if the action was valid, false if not.
    */
   public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
-    if (action.equals("watch")) {
+    if (action.equals("start")) {
 //      Log.d(LOGTAG, "WATCH");
       this.watch(callbackContext);
       return true;
-    } else if (action.equals("unwatch")) {
+    } else if (action.equals("stop")) {
 //      Log.d(LOGTAG, "UNWATCH");
       this.unwatch(callbackContext);
+      return true;
+    } else if(action.equals("getServices")) {
+      this.getServices(callbackContext);
       return true;
     }
     return false;
@@ -69,18 +71,21 @@ public class IonicDiscover extends CordovaPlugin {
   public void watch(CallbackContext callbackContext) {
     // unwatch previous connections
     this.unwatch(null);
-    this.callbackContext = callbackContext;
     this.start();
   }
 
   public void unwatch(CallbackContext cb) {
     this.close();
-    if (this.callbackContext != null) {
-      this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
-      this.callbackContext = null;
-    }
     if (cb != null) {
       cb.sendPluginResult(new PluginResult(PluginResult.Status.OK));
+    }
+  }
+
+  public void getServices(CallbackContext cb) {
+    if (cb != null) {
+      this.gc();
+      JSONObject message = generateMessage(services.values());
+      cb.sendPluginResult(new PluginResult(PluginResult.Status.OK, message));
     }
   }
 
@@ -89,10 +94,6 @@ public class IonicDiscover extends CordovaPlugin {
     if (latch != null) return;
     latch = new CountDownLatch(1);
     running = true;
-
-    // start timer to do GC
-    timer = new ScheduledThreadPoolExecutor(1);
-    timer.scheduleWithFixedDelay(() -> gc(), 0L, 1L, TimeUnit.SECONDS);
 
     new AsyncTask<Void, Void, JSONObject>() {
       @Override
@@ -117,11 +118,7 @@ public class IonicDiscover extends CordovaPlugin {
                 IonicDiscover.this.addService(dict);
               }
             } catch (JSONException e) {
-              if (callbackContext != null) {
-                PluginResult err = new PluginResult(PluginResult.Status.ERROR, "Error parsing result as JSON: " + result);
-                err.setKeepCallback(true);
-                callbackContext.sendPluginResult(err);
-              }
+              Log.e(LOGTAG, "Error parsing result as JSON: " + result);
             }
           }
           socket.close();
@@ -129,7 +126,6 @@ public class IonicDiscover extends CordovaPlugin {
           latch.countDown();
 
         } catch (Exception e) {
-          callbackContext.error(e.getMessage());
           Log.e(LOGTAG, "Exception while listening for server broadcast");
           e.printStackTrace();
           running = false;
@@ -155,9 +151,6 @@ public class IonicDiscover extends CordovaPlugin {
           dict.getString("path")
       ));
     } catch (ExceptionInInitializerError | JSONException e) {
-      if (callbackContext != null) {
-        callbackContext.error("Malformed service response");
-      }
       Log.e(LOGTAG, "Malformed service response");
       e.printStackTrace();
       return;
@@ -181,14 +174,12 @@ public class IonicDiscover extends CordovaPlugin {
         it.remove();
       }
     }
-    this.emit();
   }
 
   private void close() {
 //    Log.d(LOGTAG, "CLOSE");
     if (latch == null) return;
     running = false;
-    timer.shutdownNow();
     this.cordova.getThreadPool().execute(() -> {
 //      Log.d(LOGTAG, "Waiting for latch");
       try {
@@ -201,14 +192,6 @@ public class IonicDiscover extends CordovaPlugin {
     });
 
     return;
-  }
-
-  private void emit() {
-    if (this.callbackContext == null) return;
-    JSONObject message = generateMessage(services.values());
-    PluginResult pr = new PluginResult(PluginResult.Status.OK, message);
-    pr.setKeepCallback(true);
-    this.callbackContext.sendPluginResult(pr);
   }
 
   private JSONObject generateMessage(Collection<Service> services) {

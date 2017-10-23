@@ -10,33 +10,28 @@ import Foundation
         service = IonicDiscover(namespace: "devapp")
     }
 
-    public func watch(_ command: CDVInvokedUrlCommand?) {
+    public func start(_ command: CDVInvokedUrlCommand?) {
         // unwatch previous connections
         unwatch(nil)
 
-        callbackID = command?.callbackId
-        service.start { self.emit() }
+        service.start { }
     }
 
-    public func unwatch(_ command: CDVInvokedUrlCommand?) {
+    public func stop(_ command: CDVInvokedUrlCommand?) {
         service.close()
-        if let id = self.callbackID {
-            commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: id)
-            callbackID = nil
-        }
         if let c = command {
             commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: c.callbackId)
         }
     }
 
-    private func emit() {
-        guard let id = self.callbackID else {
-            return
+    public func getServices(_ command: CDVInvokedUrlCommand?) {
+        service.close()
+
+        if let c = command {
+            let message = generateMessage(service.getServices())
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: message)
+            commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: c.callbackId)
         }
-        let message = generateMessage(service.getServices())
-        let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: message)
-        pluginResult?.setKeepCallbackAs(true)
-        self.commandDelegate?.send(pluginResult, callbackId: id)
     }
 
     private func generateMessage(_ services: [Service]) -> [String: Any] {

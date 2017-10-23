@@ -3,14 +3,17 @@ var exec = require('cordova/exec');
 
 var IonicDiscover = {
 
-    watch : function(success, failure) {
-        return exec(success, failure, "IonicDiscover", "watch");
+    start: function() {
+        return exec(null, null, "IonicDiscover", "start");
     },
 
-    unwatch : function(success, failure) {
-        return exec(success, failure, "IonicDiscover", "unwatch");
+    stop: function() {
+        return exec(null, null, "IonicDiscover", "stop");
     },
 
+    getServices: function(success, failure) {
+        return exec(success, failure, "IonicDiscover", "getServices");
+    },
 };
 
 module.exports = IonicDiscover;
