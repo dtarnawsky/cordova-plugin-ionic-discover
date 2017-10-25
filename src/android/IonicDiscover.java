@@ -20,8 +20,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 
 public class IonicDiscover extends CordovaPlugin {
@@ -31,6 +29,7 @@ public class IonicDiscover extends CordovaPlugin {
   private volatile HashMap<String, Service> services = new HashMap<>();
   private CountDownLatch latch = null;
   private volatile boolean running = false;
+  private boolean shouldRestart = false;
 
 
   /**
@@ -159,7 +158,15 @@ public class IonicDiscover extends CordovaPlugin {
   }
 
   @Override
+  public void onResume(boolean multitasking) {
+    if (!shouldRestart) return;
+    start();
+    shouldRestart = false;
+  }
+
+  @Override
   public void onPause(boolean multitasking) {
+      if (running) shouldRestart = true;
       close();
   }
 
