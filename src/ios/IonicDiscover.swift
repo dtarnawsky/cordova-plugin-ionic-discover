@@ -56,6 +56,10 @@ public class IonicDiscover : NSObject, GCDAsyncUdpSocketDelegate {
         socket.setIPv4Enabled(true)
 
         do {
+            // it seems like there is a race sometimes where close()
+            // doesn't "unbind" a previous socket fast enough and socket.bind()
+            // throws "Address already in use", unless we sleep() or enableReusePort()
+            try socket.enableReusePort(true)
             try socket.bind(toPort: IonicDiscover.PORT)
             try socket.enableBroadcast(true)
             try socket.beginReceiving()
