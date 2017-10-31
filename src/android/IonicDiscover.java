@@ -159,6 +159,14 @@ public class IonicDiscover extends CordovaPlugin {
 
   @Override
   public void onResume(boolean multitasking) {
+    // latch may not have decremented before we went into background
+    if (latch != null) {
+      try {
+        latch.await();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
     if (!shouldRestart) return;
     start();
     shouldRestart = false;
