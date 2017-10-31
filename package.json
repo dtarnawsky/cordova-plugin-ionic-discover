@@ -1,6 +1,6 @@
 {
     "name": "cordova-plugin-ionic-discover",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Cordova Ionic Discover plugin",
     "cordova": {
         "id": "cordova-plugin-ionic-discover",
