@@ -10,21 +10,21 @@ import Foundation
         service = IonicDiscover(namespace: "devapp")
     }
 
-    @obj(start:) public func start(_ command: CDVInvokedUrlCommand?) {
+    @objc(start:) public func start(_ command: CDVInvokedUrlCommand?) {
         // unwatch previous connections
         stop(nil)
 
         service.start { }
     }
 
-    @obj(stop:) public func stop(_ command: CDVInvokedUrlCommand?) {
+    @objc(stop:) public func stop(_ command: CDVInvokedUrlCommand?) {
         service.close()
         if let c = command {
             commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: c.callbackId)
         }
     }
 
-    @obj(getServices:) public func getServices(_ command: CDVInvokedUrlCommand?) {
+    @objc(getServices:) public func getServices(_ command: CDVInvokedUrlCommand?) {
         if let c = command {
             let message = generateMessage(service.getServices())
             let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: message)
