@@ -8,9 +8,17 @@
     "cordova": {
         "id": "cordova-plugin-ionic-discover",
         "platforms": [
+            "android",
             "ios"
         ]
     },
+    "files": [
+        "dist",
+        "plugin.xml",
+        "src/android",
+        "src/ios",
+        "www"
+      ],
     "scripts": {
         "build": "tsc && rollup --config rollup.config.js",
         "sync_plugin_xml": "sync-cordova-xml package.json plugin.xml --output=plugin.xml",
@@ -46,7 +54,7 @@
     "devDependencies": {
         "@rollup/plugin-commonjs": "24.0.1",
         "@rollup/plugin-node-resolve": "15.0.1",
-        "@types/cordova": "11.0.0",
+        "@types/cordova": "^0.0.34",
         "np": "^2.16.0",
         "rollup": "3.17.2",
         "rollup-plugin-sourcemaps": "0.6.3",
