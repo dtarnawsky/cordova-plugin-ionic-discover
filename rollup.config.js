@@ -1,16 +1,19 @@
-import commonjs from '@rollup/plugin-commonjs';
-import sourcemaps from 'rollup-plugin-sourcemaps';
-import resolve from '@rollup/plugin-node-resolve';
-
 export default {
-  input: 'dist/esm/index.js',
-  output: {
-    file: 'dist/index.js',
-    format: 'es',
-    name: 'ionicDiscoveryExports',
-    sourcemap: true,
-    banner: '/*! Ionic Discovery: https://ionicframework.com */',
-  },
-
-  plugins: [sourcemaps(), commonjs(), resolve()],
-};
+    input: 'dist/esm/index.js',
+    output: [
+      {
+        file: 'dist/plugin.js',
+        format: 'iife',
+        name: 'ionicDiscover',
+        sourcemap: true,
+        inlineDynamicImports: true,
+      },
+      {
+        file: 'dist/plugin.cjs.js',
+        format: 'cjs',
+        sourcemap: true,
+        inlineDynamicImports: true,
+      },
+    ],
+    external: ['@capacitor/core'],
+  };

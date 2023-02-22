@@ -4,11 +4,11 @@ export declare class IonicDiscovery {
      * Start listening for broadcast services
      * @returns void
      */
-    start(): void;
+    start(): Promise<void>;
     /**
      * Stop listening for broadcast services
      * @returns void
      */
-    stop(): void;
+    stop(): Promise<void>;
     getServices(): Promise<Services>;
 }
