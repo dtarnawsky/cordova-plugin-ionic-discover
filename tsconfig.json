@@ -1,33 +1,20 @@
 {
     "compilerOptions": {
-        "allowSyntheticDefaultImports": true,
-        "allowUnreachableCode": false,
-        "declaration": true,
-        "forceConsistentCasingInFileNames": true,
-        "importHelpers": true,
-        "lib": [
-            "es2015",
-            "dom"
-        ],
-        "module": "es2015",
-        "moduleResolution": "node",
-        "noEmitHelpers": true,
-        "noImplicitAny": true,
-        "declarationDir": "dist/typings",
-        "noFallthroughCasesInSwitch": true,
-        "noUnusedLocals": false,
-        "pretty": true,
-        "skipLibCheck": true,
-        "strict": true,
-        "target": "es2017",
-        "sourceMap": true,
-        "inlineSources": true,
-        "esModuleInterop": true,
-        "noUnusedParameters": false,
-        "outDir": "dist/esm"
+      "allowUnreachableCode": false,
+      "declaration": true,
+      "esModuleInterop": true,
+      "inlineSources": true,
+      "lib": ["dom", "es2017"],
+      "module": "esnext",
+      "moduleResolution": "node",
+      "noFallthroughCasesInSwitch": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "outDir": "dist/esm",
+      "pretty": true,
+      "sourceMap": true,
+      "strict": true,
+      "target": "es2017"
     },
-    "outDir": "dist/esm",
-    "include": [
-        "src/**/index.ts"
-    ]
-}
+    "files": ["src/index.ts"]
+  }

@@ -13,4 +13,6 @@ declare class IonicDiscoveryCL {
     getServices(): Promise<Services>;
 }
 declare const IonicDiscovery: IonicDiscoveryCL;
+export * from './Service';
+export * from './Services';
 export { IonicDiscovery };
