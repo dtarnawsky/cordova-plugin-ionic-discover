@@ -15,6 +15,9 @@ import Foundation
         stop(nil)
 
         service.start { }
+        if let c = command {
+            commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: c.callbackId)
+        }
     }
 
     @objc(stop:) public func stop(_ command: CDVInvokedUrlCommand?) {

@@ -6,7 +6,7 @@ export class IonicDiscovery {
      * @returns void
      */
     start(): Promise<void> {
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             window.cordova.exec(resolve, reject, "IonicDiscover", "start");
         });
     }
@@ -16,7 +16,7 @@ export class IonicDiscovery {
      * @returns void
      */
     stop(): Promise<void> {
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             window.cordova.exec(resolve, reject, "IonicDiscover", "stop");
         });
     }
