@@ -1,5 +1,4 @@
-'use strict';
-
+/*! Ionic Discover: https://ionicframework.com/  */
 class IonicDiscovery {
     /**
      * Start listening for broadcast services
@@ -26,5 +25,5 @@ class IonicDiscovery {
     }
 }
 
-exports.IonicDiscovery = IonicDiscovery;
-//# sourceMappingURL=plugin.cjs.js.map
+export { IonicDiscovery };
+//# sourceMappingURL=index.js.map
