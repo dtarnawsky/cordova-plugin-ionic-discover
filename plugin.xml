@@ -14,7 +14,7 @@
     </engines>
 
     <platform name="ios">
-        <js-module src="www/ionic-discover.js" name="IonicDiscover">
+        <js-module src="dist/index.js" name="IonicDiscover">
             <clobbers target="window.IonicDiscover"/>
         </js-module>
         <config-file target="config.xml" parent="/*">
