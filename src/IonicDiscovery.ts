@@ -1,4 +1,5 @@
 import { Services } from "./Services";
+import { exec } from 'cordova';
 
 export class IonicDiscovery {
 
@@ -18,7 +19,7 @@ export class IonicDiscovery {
 
     public getServices(): Promise<Services> {
         return new Promise<Services>((resolve, reject) => {
-            cordova.exec(resolve, reject, "IonicDiscover", "getServices");
+            exec(resolve, reject, "IonicDiscover", "getServices");
         });
     }
 }    
