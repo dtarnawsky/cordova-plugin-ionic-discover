@@ -13,7 +13,7 @@ export class IonicDiscovery {
     }
     getServices() {
         return new Promise((resolve, reject) => {
-            cordova.exec(resolve, reject, "IonicDiscover", "getServices");
+            window.cordova.exec(resolve, reject, "IonicDiscover", "getServices");
         });
     }
 }
