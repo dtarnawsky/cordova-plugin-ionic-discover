@@ -14,7 +14,7 @@
     </engines>
 
     <platform name="ios">
-        <js-module src="dist/index.js" name="IonicDiscover">
+        <js-module src="dist/esm/index.js" name="IonicDiscover">
             <clobbers target="window.IonicDiscover"/>
         </js-module>
         <config-file target="config.xml" parent="/*">
@@ -30,7 +30,7 @@
     </platform>
 
     <platform name="android">
-        <js-module src="dist/index.js" name="IonicDiscover">
+        <js-module src="dist/esm/index.js" name="IonicDiscover">
             <clobbers target="window.IonicDiscover"/>
         </js-module>
         <config-file target="config.xml" parent="/*">
