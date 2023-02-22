@@ -10,7 +10,7 @@ import Foundation
         service = IonicDiscover(namespace: "devapp")
     }
 
-    @objc(start:) public func start(_ command: CDVInvokedUrlCommand?) {
+    @objc(listen:) public func listen(_ command: CDVInvokedUrlCommand?) {
         // unwatch previous connections
         stop(nil)
 

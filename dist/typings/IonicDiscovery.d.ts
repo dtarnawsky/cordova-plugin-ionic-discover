@@ -4,7 +4,7 @@ export declare class IonicDiscovery {
      * Start listening for broadcast services
      * @returns void
      */
-    start(): Promise<void>;
+    listen(): Promise<void>;
     /**
      * Stop listening for broadcast services
      * @returns void

@@ -2,12 +2,12 @@
 
 var IonicDiscover = {
 
-    start: function() {
-        return window.cordova.exec(null, null, "IonicDiscover", "start");
+    listen: function(success, failure) {
+        return window.cordova.exec(success, failure, "IonicDiscover", "start");
     },
 
-    stop: function() {
-        return window.cordova.exec(null, null, "IonicDiscover", "stop");
+    stop: function(success, failure) {
+        return window.cordova.exec(success, failure, "IonicDiscover", "stop");
     },
 
     getServices: function(success, failure) {

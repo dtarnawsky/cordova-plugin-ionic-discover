@@ -5,9 +5,9 @@ export class IonicDiscovery {
      * Start listening for broadcast services
      * @returns void
      */
-    start(): Promise<void> {
+    listen(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
-            window.cordova.exec(resolve, reject, "IonicDiscover", "start");
+            window.cordova.exec(resolve, reject, "IonicDiscover", "listen");
         });
     }
 
