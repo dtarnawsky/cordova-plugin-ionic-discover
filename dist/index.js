@@ -5,7 +5,7 @@ class IonicDiscoveryCL {
      */
     listen() {
         return new Promise((resolve, reject) => {
-            window.cordova.exec(resolve, reject, "IonicDiscover", "listen");
+            cordova.exec(resolve, reject, "IonicDiscover", "listen");
         });
     }
     /**
@@ -14,7 +14,7 @@ class IonicDiscoveryCL {
      */
     stop() {
         return new Promise((resolve, reject) => {
-            window.cordova.exec(resolve, reject, "IonicDiscover", "stop");
+            cordova.exec(resolve, reject, "IonicDiscover", "stop");
         });
     }
     getServices() {

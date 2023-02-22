@@ -1,1 +1,0 @@
-{"version":3,"file":"Service.js","sourceRoot":"","sources":["../../src/Service.ts"],"names":[],"mappings":"","sourcesContent":["/**\n * A running service\n */\nexport interface Service {\n    path: string\n    hostname: string\n    id: string\n    address: string\n    port: number\n    name: string\n  }"]}
