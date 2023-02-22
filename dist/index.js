@@ -1,4 +1,3 @@
-/*! Ionic Discover: https://ionicframework.com/  */
 class IonicDiscoveryCL {
     /**
      * Start listening for broadcast services
