@@ -3,7 +3,7 @@ export class IonicDiscovery {
      * Start listening for broadcast services
      * @returns void
      */
-    start() {
+    static start() {
         return new Promise((resolve, reject) => {
             window.cordova.exec(resolve, reject, "IonicDiscover", "start");
         });
@@ -12,12 +12,12 @@ export class IonicDiscovery {
      * Stop listening for broadcast services
      * @returns void
      */
-    stop() {
+    static stop() {
         return new Promise((resolve, reject) => {
             window.cordova.exec(resolve, reject, "IonicDiscover", "stop");
         });
     }
-    getServices() {
+    static getServices() {
         return new Promise((resolve, reject) => {
             window.cordova.exec(resolve, reject, "IonicDiscover", "getServices");
         });
