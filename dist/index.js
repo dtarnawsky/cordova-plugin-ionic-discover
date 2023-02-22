@@ -1,6 +1,4 @@
 /*! Ionic Discovery: https://ionicframework.com */
-import { exec } from 'cordova';
-
 class IonicDiscovery {
     /**
      * Start listening for broadcast services
@@ -16,7 +14,7 @@ class IonicDiscovery {
     }
     getServices() {
         return new Promise((resolve, reject) => {
-            exec(resolve, reject, "IonicDiscover", "getServices");
+            cordova.exec(resolve, reject, "IonicDiscover", "getServices");
         });
     }
 }

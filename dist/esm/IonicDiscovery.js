@@ -1,4 +1,3 @@
-import { exec } from 'cordova';
 export class IonicDiscovery {
     /**
      * Start listening for broadcast services
@@ -14,7 +13,7 @@ export class IonicDiscovery {
     }
     getServices() {
         return new Promise((resolve, reject) => {
-            exec(resolve, reject, "IonicDiscover", "getServices");
+            cordova.exec(resolve, reject, "IonicDiscover", "getServices");
         });
     }
 }
