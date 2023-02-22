@@ -1,5 +1,5 @@
 import { Services } from "./Services";
-export declare class IonicDiscovery {
+declare class IonicDiscoveryCL {
     /**
      * Start listening for broadcast services
      * @returns void
@@ -12,3 +12,5 @@ export declare class IonicDiscovery {
     stop(): Promise<void>;
     getServices(): Promise<Services>;
 }
+declare const IonicDiscovery: IonicDiscoveryCL;
+export { IonicDiscovery };

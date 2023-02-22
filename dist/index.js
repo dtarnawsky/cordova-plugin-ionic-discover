@@ -1,5 +1,5 @@
 /*! Ionic Discover: https://ionicframework.com/  */
-class IonicDiscovery {
+class IonicDiscoveryCL {
     /**
      * Start listening for broadcast services
      * @returns void
@@ -24,6 +24,7 @@ class IonicDiscovery {
         });
     }
 }
+const IonicDiscovery = new IonicDiscoveryCL();
 
 export { IonicDiscovery };
 //# sourceMappingURL=index.js.map

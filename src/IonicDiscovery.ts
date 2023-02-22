@@ -1,6 +1,6 @@
 import { Services } from "./Services";
 
-export class IonicDiscovery {
+class IonicDiscoveryCL {
     /**
      * Start listening for broadcast services
      * @returns void
@@ -27,3 +27,7 @@ export class IonicDiscovery {
         });
     }
 }
+
+const IonicDiscovery = new IonicDiscoveryCL();
+
+export { IonicDiscovery }
