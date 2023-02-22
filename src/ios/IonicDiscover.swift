@@ -44,7 +44,7 @@ public class IonicDiscover : NSObject, GCDAsyncUdpSocketDelegate {
         return self.socket != nil
     }
 
-    public func start(didChange: @escaping (()->Void)) {
+    public func listen(didChange: @escaping (()->Void)) {
         if self.isRunning() {
             return
         }
