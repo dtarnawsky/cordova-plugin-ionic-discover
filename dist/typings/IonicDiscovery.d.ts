@@ -4,12 +4,12 @@ declare class IonicDiscovery {
      * Start listening for broadcast services
      * @returns void
      */
-    start(): Promise<void>;
+    static start(): Promise<void>;
     /**
      * Stop listening for broadcast services
      * @returns void
      */
-    stop(): Promise<void>;
-    getServices(): Promise<Services>;
+    static stop(): Promise<void>;
+    static getServices(): Promise<Services>;
 }
 export { IonicDiscovery };
