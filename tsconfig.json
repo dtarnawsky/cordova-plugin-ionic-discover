@@ -13,6 +13,7 @@
         "moduleResolution": "node",
         "noEmitHelpers": true,
         "noImplicitAny": true,
+        "declarationDir": "dist/typings",
         "noFallthroughCasesInSwitch": true,
         "noUnusedLocals": false,
         "pretty": true,
