@@ -34,7 +34,7 @@ public class IonicDiscover : NSObject, GCDAsyncUdpSocketDelegate {
     var namespace: String
     var socket: GCDAsyncUdpSocket?
     var services = [String: Service]()
-    var didChange: (() -> Void)?
+    //var didChange: (() -> Void)?
 
     init(namespace: String) {
         self.namespace = namespace
@@ -44,7 +44,8 @@ public class IonicDiscover : NSObject, GCDAsyncUdpSocketDelegate {
         return self.socket != nil
     }
 
-    public func listen(didChange: @escaping (()->Void)) {
+    public func listen() {
+    //public func listen(didChange: @escaping (()->Void)) {
         if self.isRunning() {
             return
         }
@@ -64,7 +65,7 @@ public class IonicDiscover : NSObject, GCDAsyncUdpSocketDelegate {
             try socket.enableBroadcast(true)
             try socket.beginReceiving()
             self.socket = socket
-            self.didChange = didChange
+            //self.didChange = didChange
 
         } catch _ as NSError {
             print("Issue with setting up listener")
@@ -84,11 +85,11 @@ public class IonicDiscover : NSObject, GCDAsyncUdpSocketDelegate {
                 self.services.removeValue(forKey: id)
             }
         }
-        self.emit();
+        //self.emit();
     }
 
     private func emit() {
-        self.didChange?()
+        //self.didChange?()
     }
 
     public func udpSocket(_ sock: GCDAsyncUdpSocket, didReceive data: Data, fromAddress address: Data, withFilterContext filterContext: Any?) {
@@ -131,7 +132,7 @@ public class IonicDiscover : NSObject, GCDAsyncUdpSocketDelegate {
         }
         socket!.close()
         services.removeAll()
-        didChange = nil
+        //didChange = nil
         socket = nil
     }
 }
