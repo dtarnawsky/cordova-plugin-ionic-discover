@@ -3,7 +3,7 @@
 var IonicDiscover = {
 
     listen: function(success, failure) {
-        return window.cordova.exec(success, failure, "IonicDiscover", "start");
+        return window.cordova.exec(success, failure, "IonicDiscover", "listen");
     },
 
     stop: function(success, failure) {

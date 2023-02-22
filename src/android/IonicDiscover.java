@@ -52,7 +52,7 @@ public class IonicDiscover extends CordovaPlugin {
    * @return                  True if the action was valid, false if not.
    */
   public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
-    if (action.equals("start")) {
+    if (action.equals("listen")) {
 //      Log.d(LOGTAG, "WATCH");
       this.watch(callbackContext);
       return true;
@@ -70,7 +70,7 @@ public class IonicDiscover extends CordovaPlugin {
   public void watch(CallbackContext callbackContext) {
     // unwatch previous connections
     this.unwatch(null);
-    this.start();
+    this.listen();
   }
 
   public void unwatch(CallbackContext cb) {
@@ -88,7 +88,7 @@ public class IonicDiscover extends CordovaPlugin {
     }
   }
 
-  private void start() {
+  private void listen() {
 //    Log.d(LOGTAG, "START");
     if (latch != null) return;
     latch = new CountDownLatch(1);
