@@ -1,12 +1,11 @@
 import { Services } from "./Services";
 
-export class IonicDiscovery {
-
+class IonicDiscovery {
     /**
      * Start listening for broadcast services
      * @returns void
      */
-     public static start(): Promise<void> {
+    start(): Promise<void> {
         return new Promise((resolve, reject) => {
             window.cordova.exec(resolve, reject, "IonicDiscover", "start");
         });
@@ -16,15 +15,17 @@ export class IonicDiscovery {
      * Stop listening for broadcast services
      * @returns void
      */
-    public static stop(): Promise<void> {
+    stop(): Promise<void> {
         return new Promise((resolve, reject) => {
             window.cordova.exec(resolve, reject, "IonicDiscover", "stop");
         });
     }
 
-    public static getServices(): Promise<Services> {
+    getServices(): Promise<Services> {
         return new Promise<Services>((resolve, reject) => {
             window.cordova.exec(resolve, reject, "IonicDiscover", "getServices");
         });
     }
-}    
+}
+
+export { IonicDiscovery };
