@@ -2,6 +2,9 @@
     "name": "cordova-plugin-ionic-discover",
     "version": "1.0.3",
     "description": "Cordova Ionic Discover plugin",
+    "main": "dist/index.js",
+    "typings": "dist/typings/index.d.ts",
+    "type": "module",
     "cordova": {
         "id": "cordova-plugin-ionic-discover",
         "platforms": [
@@ -9,6 +12,7 @@
         ]
     },
     "scripts": {
+        "build": "tsc && rollup --config rollup.config.js",
         "sync_plugin_xml": "sync-cordova-xml package.json plugin.xml --output=plugin.xml",
         "version": "npm run sync_plugin_xml && git add plugin.xml",
         "deploy": "np --yolo"
@@ -40,7 +44,13 @@
     },
     "homepage": "https://github.com/ionic-team/cordova-plugin-ionic-discover",
     "devDependencies": {
+        "@rollup/plugin-commonjs": "24.0.1",
+        "@rollup/plugin-node-resolve": "15.0.1",
+        "@types/cordova": "11.0.0",
         "np": "^2.16.0",
-        "sync-cordova-xml": "^0.4.0"
+        "rollup": "3.17.2",
+        "rollup-plugin-sourcemaps": "0.6.3",
+        "sync-cordova-xml": "^0.4.0",
+        "typescript": "4.9.5"
     }
 }
