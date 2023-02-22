@@ -14,7 +14,7 @@ import Foundation
         // unwatch previous connections
         stop(nil)
 
-        service.start { }
+        service.listen()
         if let c = command {
             commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: c.callbackId)
         }
