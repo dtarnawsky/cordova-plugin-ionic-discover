@@ -18,7 +18,7 @@ export class IonicDiscovery {
 
     public getServices(): Promise<Services> {
         return new Promise<Services>((resolve, reject) => {
-            (cordova as any).exec(resolve, reject, "IonicDiscover", "getServices");
+            cordova?.exec(resolve, reject, "IonicDiscover", "getServices");
         });
     }
 }    

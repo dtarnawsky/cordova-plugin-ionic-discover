@@ -13,7 +13,7 @@ export class IonicDiscovery {
     }
     getServices() {
         return new Promise((resolve, reject) => {
-            cordova.exec(resolve, reject, "IonicDiscover", "getServices");
+            cordova === null || cordova === void 0 ? void 0 : cordova.exec(resolve, reject, "IonicDiscover", "getServices");
         });
     }
 }
